@@ -1,0 +1,50 @@
+.task-list {
+
+  .task-item {
+    box-shadow: 0px 2px 4px 1px rgba(184,184,184,0.39);
+    min-height: 150px;
+    border-radius: 8px;
+    position: relative;
+
+    &.completed {
+      background-color: #a3cfbb;
+    }
+
+    &.incomplete {
+      background-color: #ffe69c;
+    }
+
+    .action {
+      top:1em;
+      right: 1em;
+    }
+  }
+}
+
+::ng-deep {
+
+  .action-panel {
+
+    .p-overlaypanel-content{
+      padding: 12px;
+    }
+  }
+
+  .dialog-add .p-dialog{
+    min-height: 350px;
+    min-width: 80vw;
+
+    .p-dialog-content,
+    .p-dialog-header  {
+      padding: 1em;
+    }
+  }
+
+  .dropdown-name .p-dropdown .p-dropdown-label {
+    width: 180px;
+  }
+
+  p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
+    border-color: #ced4da;
+  }
+}

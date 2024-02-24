@@ -1,0 +1,18 @@
+<div class="detail-wrapper" *ngIf="taskData != undefined">
+  <header title="Task Detail" backButton="true"></header>
+
+  <div class="detail pe-4  position-relative">
+    <div>Task ID: {{taskData.id}}</div>
+    <div>Description: {{taskData.description}}</div>
+    <div>Assignee: {{taskData.assigneeId | userName | async}}</div>
+    <div>Status: 
+      <p-tag class="m-1" [severity]="taskData.completed ? 'success' : 'warning'" [value]="taskData.completed ? 'completed' : 'incomplete'"></p-tag>
+    </div>
+
+    <div class="text-center edit-task position-absolute end-0 top-0">
+      <button type="button" class="btn btn-sm btn-dark" (click)="editTask(taskData.id)">Edit</button>
+    </div>
+  </div>
+</div>
+<app-loading [isLoading]="isLoading"></app-loading>
+<p-toast position="top-center" key="message"></p-toast>

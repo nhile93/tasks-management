@@ -1,0 +1,68 @@
+<header title="Task list"></header>
+<div class="container" id="container">
+  
+  <div class="row justify-content-between mb-4">
+    <div class="col-auto">
+      <input #searchInput type="text" (keypress)="validateInput($event)" pattern="[0-9]*"/>
+      <button type="button" class="ms-2 btn btn-sm btn-primary" (click)="search()">Search</button>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-dark btn-sm" (click)="openDialog()">Add new task</button>
+    </div>
+  </div>
+
+  <div class="row g-4 task-list position-relative">
+    <div class="col-6 position-relative" *ngFor="let item of searchedTasks ? searchedTasks : tasks">
+      <div class="p-3 pe-5 task-item" [ngClass]="item.completed ? 'completed' : 'incomplete'">
+        <div class="action position-absolute d-flex justify-content-center align-items-center p-1">
+        <i class="pi pi-ellipsis-h" role="button" (click)="op.toggle($event)"></i>
+        </div>
+        <div>Task ID: {{item.id}}</div>
+        <div>Description: {{item.description}}</div>
+        <div>Assignee: {{item.assigneeId | userName | async}}</div>
+      </div>
+      
+      <p-overlayPanel #op styleClass="action-panel">
+        <ng-template pTemplate>
+          <div class="d-flex flex-column">
+            <button type="button" class="mb-1 btn btn-dark btn-sm" (click)="gotoDetail(item)">Detail</button>
+            <button type="button" class="mb-1 btn btn-dark btn-sm" (click)="editTask(item)">Edit</button>
+            <button type="button" class="mb-1 btn btn-dark btn-sm" (click)="completeTask(item)" [disabled]="item.completed ? 'disabled' : ''">Complete</button>
+          </div>
+        </ng-template>
+      </p-overlayPanel>
+    </div>
+  </div>
+</div>
+<p-toast position="top-center" key="message"></p-toast>
+
+<p-dialog header="Add new task" [(visible)]="displayDialog" class="dialog-add" [draggable]="false" [modal]="true">
+
+  <form [formGroup]="addTaskForm" class="form">
+    <div class="form-item mb-3">
+      <div class="mb-1">Assign to: </div>
+      <p-dropdown [options]="users" formControlName="selectedUser" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a assignee" class="dropdown-name">
+      </p-dropdown>
+
+      <div class="valid-text" *ngIf="addTaskForm.get('selectedUser').invalid && addTaskForm.get('selectedUser').touched">
+        <div class="error-message text-danger">Please select an assignee</div>
+      </div>
+    </div>
+
+    <div class="form-item mb-3">
+      <div class="mb-1">Description: </div>
+      <textarea formControlName="taskDescription" rows="4" class="text-area w-100"></textarea>
+      <div class="valid-text" *ngIf="addTaskForm.get('taskDescription').invalid && addTaskForm.get('taskDescription').touched">
+        <div class="error-message text-danger">Description is required</div>
+      </div>
+    </div>
+
+  </form>
+  <ng-template pTemplate="footer">
+    <button type="button" class="btn btn-secondary btn-sm" (click)="cancelAdd()">Cancel</button>
+    <button type="button" class="btn btn-dark btn-sm" (click)="addNewTask()">Add</button>
+  </ng-template>
+
+</p-dialog>
+
+<app-loading [isLoading]="isLoading"></app-loading>

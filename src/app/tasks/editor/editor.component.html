@@ -1,0 +1,40 @@
+<div class="edit-wrapper" *ngIf="taskData">
+  <header backButton="true" title="Edit task ID: {{taskId}}"></header>
+
+  <form [formGroup]="editTaskForm" class="form">
+    <div class="row-item mb-3">
+      <div class="mb-1">Assign to: </div>
+      <p-dropdown [options]="users" formControlName="selectedUser" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a assignee" class="dropdown-name">
+      </p-dropdown>
+
+      <div class="valid-text" *ngIf="editTaskForm.get('selectedUser').invalid && editTaskForm.get('selectedUser').touched">
+        <div class="error-message text-danger">Please select an assignee</div>
+      </div>
+    </div>
+
+    <div class="row-item mb-3">
+      <div class="mb-1">Description:</div>
+      <textarea formControlName="taskDescription" rows="4" class="w-100"></textarea>
+      <div class="valid-text" *ngIf="editTaskForm.get('taskDescription').invalid && editTaskForm.get('taskDescription').touched">
+        <div class="error-message text-danger">Description is required</div>
+      </div>
+    </div>
+
+    <div class="row-item mb-3">
+      <div class="mb-1 d-flex align-item-center">Status:
+        <p-inputSwitch class="ms-2" formControlName="status"></p-inputSwitch>
+        <span class="ms-2">
+          {{ editTaskForm.get('status').value ? 'Completed' : 'Incomplete' }}
+        </span>
+      </div>
+    </div>
+    
+    <div class="row justify-content-end">
+    <div class="col-auto">
+      <button type="button" class="btn btn-dark btn-sm" (click)="editTask()">Edit task</button>
+    </div>
+  </div>
+  </form>
+</div>
+<p-toast position="top-center" key="message"></p-toast>
+<app-loading [isLoading]="isLoading"></app-loading>

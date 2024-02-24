@@ -1,0 +1,9 @@
+::ng-deep {
+  .dropdown-name .p-dropdown .p-dropdown-label {
+    width: 180px;
+  }
+
+  p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
+    border-color: #ced4da;
+  }
+}

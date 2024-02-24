@@ -1,0 +1,10 @@
+.main-wrapper {
+  width: 640px;
+  margin: auto;
+  min-height: 100vh;
+}
+
+.footer {
+  width: 640px;
+  margin: auto;
+}
